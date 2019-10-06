@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Tabs, Tab } from "./components/tabs";
+import SearchPage from "./pages/search";
+import FavoritesPage from "./pages/favorites";
 
 export default class App extends Component {
   render() {
@@ -8,14 +10,15 @@ export default class App extends Component {
       <div className="container">
         <Tabs showTitle title="Gallereasy">
           <Tab
-            id="homepage"
-            label="Home Page"
-            component={<div>Testing Home Page</div>}
+            id="searchPage"
+            label="Search"
+            component={<SearchPage />}
+            defaultTab
           />
           <Tab
-            id="footer"
-            label="Footer Page"
-            component={<div>Testing Footer Page</div>}
+            id="favouritePage"
+            label="Favourites"
+            component={<FavoritesPage />}
           />
         </Tabs>
       </div>

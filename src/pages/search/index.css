@@ -1,0 +1,24 @@
+.search-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-page-input {
+  width: 50%;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  height: 50px;
+  font-size: 25px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+}
+
+.search-page-input:focus {
+  outline: none;
+}
+
+.search-page-result {
+  width: 90%;
+}

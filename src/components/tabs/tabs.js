@@ -3,7 +3,8 @@ import "./index.css";
 
 export default class Tabs extends Component {
   state = {
-    activeTab: this.props.children[0].props.id
+    activeTab: this.props.children.find(child => child.props.defaultTab).props
+      .id
   };
 
   handleChangeTab = id => e => {
