@@ -1,0 +1,14 @@
+.image-item {
+  height: 200px;
+}
+
+.image-item > img {
+  width: 100%;
+  height: 100%;
+}
+
+.images-list > .col-12,
+.images-list > .col-sm-6,
+.images-list > .col-md-3 {
+  padding: 10px;
+}
