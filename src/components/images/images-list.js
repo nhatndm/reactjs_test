@@ -3,6 +3,13 @@ import Image from "./image";
 import "./index.css";
 
 export default class ImagesList extends Component {
+  handleImageClick = image => ({ action }) => {
+    this.props.itemClick({
+      action: action,
+      image: image
+    });
+  };
+
   renderArray(dataSource) {
     let [parentComponent, chilComponent] = [[], []];
     let dataSourceLength = dataSource.length;
@@ -12,7 +19,8 @@ export default class ImagesList extends Component {
         chilComponent.push(
           <Image
             key={`child-${i}`}
-            imgSrc={dataSource[i].images.fixed_height_still.url}
+            item={dataSource[i]}
+            onClick={this.handleImageClick(dataSource[i])}
           />
         );
         parentComponent.push(
@@ -24,7 +32,8 @@ export default class ImagesList extends Component {
         chilComponent.push(
           <Image
             key={`child-${i}`}
-            imgSrc={dataSource[i].images.fixed_height_still.url}
+            item={dataSource[i]}
+            onClick={this.handleImageClick(dataSource[i])}
           />
         );
       }

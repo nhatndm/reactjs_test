@@ -3,34 +3,50 @@ import { ReactComponent as HeartSVG } from "../../assest/heart.svg";
 
 export default class Image extends Component {
   state = {
-    isFavorite: false,
+    isFavourite: false,
     imageClass: "not-hover"
   };
 
+  componentDidMount() {
+    if (this.props.item.isFavourite) {
+      this.setState({ isFavourite: true, imageClass: "liked" });
+    }
+  }
+
   onMouseEnter = e => {
-    if (!this.state.isFavorite) {
+    if (!this.state.isFavourite) {
       this.setState({ imageClass: "hover" });
     }
   };
 
   onMouseLeave = e => {
-    if (!this.state.isFavorite) {
+    if (!this.state.isFavourite) {
       this.setState({ imageClass: "not-hover" });
     }
   };
 
   onImageClick = e => {
     this.setState(prevState => {
+      if (!prevState.isFavourite) {
+        this.props.onClick({
+          action: "add"
+        });
+      } else {
+        this.props.onClick({
+          action: "remove"
+        });
+      }
+
       return {
-        isFavorite: !prevState.isFavorite,
-        imageClass: !prevState.isFavorite ? "liked" : "hover"
+        isFavourite: !prevState.isFavourite,
+        imageClass: !prevState.isFavourite ? "liked" : "hover"
       };
     });
   };
 
   render() {
     const {
-      props: { imgSrc },
+      props: { item },
       state: { imageClass }
     } = this;
     return (
@@ -40,7 +56,11 @@ export default class Image extends Component {
         onMouseLeave={this.onMouseLeave}
         onClick={this.onImageClick}
       >
-        <img className="img-fluid" src={imgSrc} alt="item" />
+        <img
+          className="img-fluid"
+          src={item.images.fixed_height_still.url}
+          alt="item"
+        />
         <HeartSVG className={imageClass} />
       </div>
     );

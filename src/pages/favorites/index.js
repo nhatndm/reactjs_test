@@ -1,34 +1,31 @@
 import React, { Component } from "react";
 import { ImagesList } from "../../components/images";
+import { connect } from "react-redux";
 import "./index.css";
 
-export default class FavoritesPage extends Component {
-  state = {
-    data: [
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif"
-    ],
-    searchText: ""
-  };
+class FavoritesPage extends Component {
+  state = {};
 
   render() {
-    const { data } = this.state;
+    const { favoriteImages } = this.props;
+
     return (
       <div className="favorites-page">
         <div className="favorites-page-data">
-          <ImagesList dataSource={data} />
+          <ImagesList dataSource={favoriteImages} />
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    favoriteImages: state.image.images.filter(v => v.isFavourite)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(FavoritesPage);

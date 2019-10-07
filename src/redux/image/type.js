@@ -1,2 +1,1 @@
 export const SAVE_IMAGES = "SAVE_IMAGES";
-export const SAVE_FAVORITE_IMAGES = "SAVE_FAVORITE_IMAGES";

@@ -11,11 +11,11 @@ import { SAVE_IMAGES } from "./type";
  * @param array $data - limit item on each response
  * @return function - async function
  */
-function saveImage(dispatch, data) {
-  return dispatch({
+function saveImage(data) {
+  return {
     type: SAVE_IMAGES,
     data: data
-  });
+  };
 }
 
 /**
@@ -52,7 +52,7 @@ export function fetchImages(searchText) {
 
       const data = response.data.data;
 
-      saveImage(dispatch, data);
+      dispatch(saveImage(data));
 
       dispatch(changeLoadingStatusTo(false));
     } catch (error) {
@@ -78,7 +78,7 @@ export function loadMoreImages(oldState, searchText, offSet) {
 
       const data = response.data.data;
 
-      saveImage(dispatch, oldState.concat(data));
+      dispatch(saveImage(oldState.concat(data)));
 
       dispatch(changeLoadingStatusTo(false));
     } catch (error) {
@@ -86,4 +86,26 @@ export function loadMoreImages(oldState, searchText, offSet) {
       dispatch(changeMessageStatusTo(true, FAILURE_MESSAGE, error.response));
     }
   };
+}
+
+/**
+ * @desc add Image to Favorite
+ * @param string $image - object image
+ * @return function - save to reducer
+ */
+export function addToFavourite(oldState, image) {
+  let item = oldState.find(v => v.id === image.id);
+  item.isFavourite = true;
+  return saveImage(oldState);
+}
+
+/**
+ * @desc remove Image from Favourite
+ * @param string $image - object image
+ * @return function - save to reducer
+ */
+export function removeFromFavourite(oldState, image) {
+  let item = oldState.find(v => v.id === image.id);
+  item.isFavourite = false;
+  return saveImage(oldState);
 }

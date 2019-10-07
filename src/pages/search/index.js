@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { ImagesList } from "../../components/images";
 import { connect } from "react-redux";
-import { fetchImages, loadMoreImages } from "../../redux/image/action";
+import {
+  fetchImages,
+  loadMoreImages,
+  addToFavourite,
+  removeFromFavourite
+} from "../../redux/image/action";
 import "./index.css";
 import Button from "../../components/button";
 
@@ -33,6 +38,16 @@ class SearchPage extends Component {
     });
   };
 
+  handleItemClick = ({ image, action }) => {
+    if (action === "add") {
+      this.props.addToFavourite(this.props.images, image);
+    }
+
+    if (action === "remove") {
+      this.props.removeFromFavourite(this.props.images, image);
+    }
+  };
+
   render() {
     const { searchText } = this.state;
     const { images, loading_status } = this.props;
@@ -45,7 +60,7 @@ class SearchPage extends Component {
           onChange={this.handleChangeTextInput}
         />
         <div className="search-page-result">
-          <ImagesList dataSource={images} />
+          <ImagesList dataSource={images} itemClick={this.handleItemClick} />
         </div>
         {images.length > 0 ? (
           <Button
@@ -70,7 +85,11 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchImages: searchText => dispatch(fetchImages(searchText)),
     loadMoreImages: (oldState, searchText, page) =>
-      dispatch(loadMoreImages(oldState, searchText, page))
+      dispatch(loadMoreImages(oldState, searchText, page)),
+    addToFavourite: (oldState, image) =>
+      dispatch(addToFavourite(oldState, image)),
+    removeFromFavourite: (oldState, image) =>
+      dispatch(removeFromFavourite(oldState, image))
   };
 };
 
