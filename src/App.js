@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import SearchPage from "./pages/search";
-import FavoritesPage from "./pages/favorites";
+import FavouritesPage from "./pages/favourites";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./pages/layout/navbar";
 
@@ -12,7 +12,7 @@ export default class App extends Component {
         <NavBar />
         <Switch>
           <Route exact path="/" component={SearchPage} />
-          <Route path="/favourite" component={FavoritesPage} />
+          <Route path="/favourite" component={FavouritesPage} />
         </Switch>
       </div>
     );

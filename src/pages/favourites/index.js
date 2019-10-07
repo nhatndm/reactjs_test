@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import "./index.css";
 import { removeFromFavourite } from "../../redux/image/action";
 
-class FavoritesPage extends Component {
+class FavouritesPage extends Component {
   handleItemClick = ({ image, action }) => {
     if (action === "remove") {
       this.props.removeFromFavourite(this.props.images, image);
@@ -12,12 +12,12 @@ class FavoritesPage extends Component {
   };
 
   render() {
-    const { favoriteImages } = this.props;
+    const { favouriteImages } = this.props;
     return (
-      <div className="favorites-page">
-        <div className="favorites-page-data">
+      <div className="favourites-page">
+        <div className="favourites-page-data">
           <ImagesList
-            dataSource={favoriteImages}
+            dataSource={favouriteImages}
             itemClick={this.handleItemClick}
           />
         </div>
@@ -29,7 +29,7 @@ class FavoritesPage extends Component {
 const mapStateToProps = state => {
   return {
     images: state.image.images,
-    favoriteImages: state.image.images.filter(v => v.isFavourite)
+    favouriteImages: state.image.images.filter(v => v.isFavourite)
   };
 };
 
@@ -43,4 +43,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FavoritesPage);
+)(FavouritesPage);

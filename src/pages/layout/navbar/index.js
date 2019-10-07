@@ -5,7 +5,7 @@ import "./index.css";
 
 class NavHeader extends Component {
   render() {
-    const { favoriteImages } = this.props;
+    const { favouriteImages } = this.props;
     return (
       <div className="navbar-header">
         <NavLink exact to="/" className="navbar-item navbar-item-title">
@@ -26,7 +26,7 @@ class NavHeader extends Component {
           to="/favourite"
           className="navbar-item"
         >
-          Favourite ({favoriteImages.length})
+          Favourite ({favouriteImages.length})
         </NavLink>
       </div>
     );
@@ -35,7 +35,7 @@ class NavHeader extends Component {
 
 const mapStateToProps = state => {
   return {
-    favoriteImages: state.image.images.filter(v => v.isFavourite)
+    favouriteImages: state.image.images.filter(v => v.isFavourite)
   };
 };
 

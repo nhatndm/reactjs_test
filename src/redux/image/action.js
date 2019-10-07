@@ -89,7 +89,7 @@ export function loadMoreImages(oldState, searchText, offSet) {
 }
 
 /**
- * @desc add Image to Favorite
+ * @desc add Image to Favourite
  * @param string $image - object image
  * @return function - save to reducer
  */
