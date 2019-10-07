@@ -9,14 +9,24 @@ export default class ImagesList extends Component {
     for (let i = 0; i < dataSourceLength; i++) {
       if (i % 4 === 0) {
         chilComponent = [];
-        chilComponent.push(<Image key={`child-${i}`} imgSrc={dataSource[i]} />);
+        chilComponent.push(
+          <Image
+            key={`child-${i}`}
+            imgSrc={dataSource[i].images.fixed_height_still.url}
+          />
+        );
         parentComponent.push(
           <div key={`parent-${i}`} className="row images-list">
             {chilComponent}
           </div>
         );
       } else {
-        chilComponent.push(<Image key={`child-${i}`} imgSrc={dataSource[i]} />);
+        chilComponent.push(
+          <Image
+            key={`child-${i}`}
+            imgSrc={dataSource[i].images.fixed_height_still.url}
+          />
+        );
       }
     }
 

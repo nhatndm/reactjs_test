@@ -1,29 +1,21 @@
 import React, { Component } from "react";
 import { ImagesList } from "../../components/images";
+import { connect } from "react-redux";
+import { fetchImages, loadMoreImages } from "../../redux/image/action";
 import "./index.css";
+import Button from "../../components/button";
 
-export default class SearchPage extends Component {
+class SearchPage extends Component {
   state = {
-    data: [
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif",
-      "https://media0.giphy.com/media/33OrjzUFwkwEg/200_s.gif?cid=557dd9f7b2a2f1c2328a92b8cf4d975f41fcb72d0a5fbd0b&rid=200_s.gif"
-    ],
-    searchText: ""
+    searchText: "",
+    currentPage: 0
   };
 
   handleKeyPress = event => {
     if (event.key === "Enter") {
-      console.log(this.state.searchText);
+      const { fetchImages } = this.props;
+      const { searchText } = this.state;
+      fetchImages(searchText);
     }
   };
 
@@ -31,8 +23,19 @@ export default class SearchPage extends Component {
     this.setState({ searchText: event.target.value });
   };
 
+  handleLoadMore = () => {
+    const { loadMoreImages, images } = this.props;
+    const { searchText } = this.state;
+    this.setState(preState => {
+      let page = preState.currentPage + 1;
+      loadMoreImages(images, searchText, page);
+      return { currentPage: page };
+    });
+  };
+
   render() {
-    const { data, searchText } = this.state;
+    const { searchText } = this.state;
+    const { images, loading_status } = this.props;
     return (
       <div className="search-page">
         <input
@@ -42,9 +45,36 @@ export default class SearchPage extends Component {
           onChange={this.handleChangeTextInput}
         />
         <div className="search-page-result">
-          <ImagesList dataSource={data} />
+          <ImagesList dataSource={images} />
         </div>
+        {images.length > 0 ? (
+          <Button
+            onClick={this.handleLoadMore}
+            title="Load More"
+            loadingState={loading_status}
+          />
+        ) : null}
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    images: state.image.images,
+    loading_status: state.system.loading_status
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchImages: searchText => dispatch(fetchImages(searchText)),
+    loadMoreImages: (oldState, searchText, page) =>
+      dispatch(loadMoreImages(oldState, searchText, page))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchPage);

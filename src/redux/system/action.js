@@ -1,4 +1,4 @@
-import { CHANGE_LOADING_STATUS, CHANGE_MESSAGE_STATUS } from "./types";
+import { CHANGE_LOADING_STATUS, CHANGE_MESSAGE_STATUS } from "./type";
 
 /**
  * @desc change loading status
