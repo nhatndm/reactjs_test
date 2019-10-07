@@ -3,7 +3,7 @@ import { changeLoadingStatusTo, changeMessageStatusTo } from "../system/action";
 import { FAILURE_MESSAGE } from "../system/type";
 import { GET } from "../../config/httpMethod";
 import { API_KEY_GIPHY } from "../../config/env";
-import { SAVE_IMAGES } from "./type";
+import { SAVE_IMAGES, SAVE_PAYLOAD } from "./type";
 
 /**
  * @desc Dispatch to save reducer
@@ -15,6 +15,19 @@ function saveImage(data) {
   return {
     type: SAVE_IMAGES,
     data: data
+  };
+}
+
+/**
+ * @desc Dispatch to save payload
+ * @param funtion $dispatch
+ * @param array $data - limit item on each response
+ * @return function - async function
+ */
+function savePayload(payload) {
+  return {
+    type: SAVE_PAYLOAD,
+    payload: payload
   };
 }
 
@@ -54,6 +67,13 @@ export function fetchImages(searchText) {
 
       dispatch(saveImage(data));
 
+      dispatch(
+        savePayload({
+          searchText: searchText,
+          page: 0
+        })
+      );
+
       dispatch(changeLoadingStatusTo(false));
     } catch (error) {
       dispatch(changeLoadingStatusTo(false));
@@ -79,6 +99,13 @@ export function loadMoreImages(oldState, searchText, offSet) {
       const data = response.data.data;
 
       dispatch(saveImage(oldState.concat(data)));
+
+      dispatch(
+        savePayload({
+          searchText: searchText,
+          page: offSet
+        })
+      );
 
       dispatch(changeLoadingStatusTo(false));
     } catch (error) {

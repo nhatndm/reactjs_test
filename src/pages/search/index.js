@@ -12,8 +12,7 @@ import Button from "../../components/button";
 
 class SearchPage extends Component {
   state = {
-    searchText: "",
-    currentPage: 0
+    searchText: ""
   };
 
   handleKeyPress = event => {
@@ -24,18 +23,22 @@ class SearchPage extends Component {
     }
   };
 
+  componentDidMount() {
+    const { searchText } = this.props.payload;
+    if (searchText) {
+      this.setState({ searchText: searchText });
+    }
+  }
+
   handleChangeTextInput = event => {
     this.setState({ searchText: event.target.value });
   };
 
   handleLoadMore = () => {
     const { loadMoreImages, images } = this.props;
+    const { page } = this.props.payload;
     const { searchText } = this.state;
-    this.setState(preState => {
-      let page = preState.currentPage + 1;
-      loadMoreImages(images, searchText, page);
-      return { currentPage: page };
-    });
+    loadMoreImages(images, searchText, page + 1);
   };
 
   handleItemClick = ({ image, action }) => {
@@ -77,7 +80,11 @@ class SearchPage extends Component {
 const mapStateToProps = state => {
   return {
     images: state.image.images,
-    loading_status: state.system.loading_status
+    loading_status: state.system.loading_status,
+    payload: {
+      searchText: state.image.payload.searchText,
+      page: state.image.payload.page
+    }
   };
 };
 
