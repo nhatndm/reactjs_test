@@ -13,6 +13,12 @@ export default class Image extends Component {
     }
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.item.isFavourite) {
+      this.setState({ isFavourite: true, imageClass: "liked" });
+    }
+  }
+
   onMouseEnter = e => {
     if (!this.state.isFavourite) {
       this.setState({ imageClass: "hover" });
