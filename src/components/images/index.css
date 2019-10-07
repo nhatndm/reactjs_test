@@ -12,3 +12,22 @@
 .images-list > .col-md-3 {
   padding: 10px;
 }
+
+.image-item > svg {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  fill: red;
+}
+
+.image-item > svg.not-hover {
+  opacity: 0;
+}
+
+.image-item > svg.hover {
+  opacity: 0.5;
+}
+
+.image-item > svg.liked {
+  opacity: 1;
+}
