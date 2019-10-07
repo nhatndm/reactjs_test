@@ -66,7 +66,7 @@ class SearchPage extends Component {
           <Button
             onClick={this.handleLoadMore}
             title="Load More"
-            loadingState={loading_status}
+            loadingStatus={loading_status}
           />
         ) : null}
       </div>
