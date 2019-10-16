@@ -41,7 +41,7 @@ function savePayload(payload) {
 function fetchImagesApi(searchText, offSet = 0, limit = 8) {
   return axios({
     method: GET,
-    url: "http://api.giphy.com/v1/gifs/search",
+    url: "https://api.giphy.com/v1/gifs/search",
     params: {
       api_key: API_KEY_GIPHY,
       q: searchText,
