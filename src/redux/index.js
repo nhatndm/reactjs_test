@@ -7,6 +7,9 @@ import { connectRouter, routerMiddleware } from "connected-react-router";
 
 export const history = createBrowserHistory();
 
+const composeEnhancers =
+	window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const rootReducer = combineReducers({
   image: ImageReducer,
   system: SystemReducer,
@@ -15,8 +18,7 @@ const rootReducer = combineReducers({
 
 export default createStore(
   rootReducer,
-  compose(
-    applyMiddleware(routerMiddleware(history), thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(
+    applyMiddleware(routerMiddleware(history), thunk)
   )
 );
